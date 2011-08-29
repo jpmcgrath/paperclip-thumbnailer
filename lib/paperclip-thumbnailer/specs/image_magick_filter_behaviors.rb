@@ -3,7 +3,7 @@ require 'rspec'
 shared_examples "a combinable ImageMagick filter" do
   it "sets the filter using #atop" do
     base_filter = Object.new
-    lambda { subject.atop(base_filter) }.should_not raise_error
+    subject.atop(base_filter).should == subject
     subject.filter.should == base_filter
   end
 end

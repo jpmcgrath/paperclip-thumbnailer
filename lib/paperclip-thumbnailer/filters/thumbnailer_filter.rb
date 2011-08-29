@@ -1,6 +1,7 @@
 class ThumbnailerFilter
   def atop(filter)
     @filter = filter
+    self
   end
 
   def filter
@@ -12,6 +13,6 @@ class ThumbnailerFilter
   end
 
   def flags(options)
-    filter.flags(options)
+    filter.flags(options).with_flag(:resize, options[:geometry])
   end
 end
