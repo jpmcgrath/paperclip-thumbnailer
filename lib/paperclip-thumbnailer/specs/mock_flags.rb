@@ -14,6 +14,10 @@ class MockFlags
     @flags.empty?
   end
 
+  def has_destination_flag?(dest)
+    @destination == dest
+  end
+
   def with_source(s)
     @source = s
     self
