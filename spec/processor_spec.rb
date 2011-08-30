@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'paperclip-thumbnailer/processor'
 
-describe Processor do
+describe Paperclip::Thumbnailer::Processor do
   let(:file) { 'file' }
   let(:filter) do
     Class.new do
@@ -14,7 +14,7 @@ describe Processor do
       end
     end.new
   end
-  subject { Processor.new(filter) }
+  subject { Paperclip::Thumbnailer::Processor.new(filter) }
 
   it_behaves_like "a Paperclip processor"
 
@@ -23,7 +23,7 @@ describe Processor do
   end
 end
 
-describe Processor, "building" do
+describe Paperclip::Thumbnailer::Processor, "building" do
   let(:top_filter) do
     Class.new do
       def atop(f)
@@ -60,7 +60,7 @@ describe Processor, "building" do
   end
 
   it "can be build from composing filters" do
-    processor = Processor.build_from([top_filter, bottom_filter])
+    processor = Paperclip::Thumbnailer::Processor.build_from([top_filter, bottom_filter])
     processor.should respond_to(:make)
   end
 end

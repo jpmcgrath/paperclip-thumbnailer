@@ -1,18 +1,24 @@
-class ThumbnailerFilter
-  def atop(filter)
-    @filter = filter
-    self
-  end
+module Paperclip
+  module Thumbnailer
 
-  def filter
-    @filter
-  end
+    class ThumbnailerFilter
+      def atop(filter)
+        @filter = filter
+        self
+      end
 
-  def command(file, options)
-    filter.command(file, options)
-  end
+      def filter
+        @filter
+      end
 
-  def flags(options)
-    filter.flags(options).with_flag(:resize, options[:geometry])
+      def command(file, options)
+        filter.command(file, options)
+      end
+
+      def flags(options)
+        filter.flags(options).with_flag(:resize, options[:geometry])
+      end
+    end
+
   end
 end

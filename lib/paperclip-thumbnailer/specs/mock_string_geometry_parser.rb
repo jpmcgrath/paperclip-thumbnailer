@@ -1,10 +1,15 @@
-class MockStringGeometryParser
-  def initialize(geo)
-    @geometry = geo
-  end
+module Paperclip
+  module Thumbnailer
 
-  def parse(geometry)
-    @geometry
+    class MockStringGeometryParser
+      def initialize(geo)
+        @geometry = geo
+      end
+
+      def parse(geometry)
+        @geometry
+      end
+    end
+
   end
 end
-

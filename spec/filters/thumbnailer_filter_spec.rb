@@ -1,17 +1,17 @@
 require 'spec_helper'
 require 'paperclip-thumbnailer/filters/thumbnailer_filter'
 
-describe ThumbnailerFilter do
+describe Paperclip::Thumbnailer::ThumbnailerFilter do
   let(:geometry) { "80x20" }
   let(:options) do
-    { :file_geometry_parser   => MockFileGeometryParser.new('100x200'),
-      :string_geometry_parser => MockStringGeometryParser.new(geometry),
+    { :file_geometry_parser   => Paperclip::Thumbnailer::MockFileGeometryParser.new('100x200'),
+      :string_geometry_parser => Paperclip::Thumbnailer::MockStringGeometryParser.new(geometry),
       :geometry => geometry }
   end
 
   subject do
-    ThumbnailerFilter.new.tap do |tf|
-      tf.atop(MockBaseFilter.new)
+    Paperclip::Thumbnailer::ThumbnailerFilter.new.tap do |tf|
+      tf.atop(Paperclip::Thumbnailer::MockBaseFilter.new)
     end
   end
 

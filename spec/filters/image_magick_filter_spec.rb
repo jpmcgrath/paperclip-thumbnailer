@@ -2,15 +2,15 @@ require 'spec_helper'
 require 'paperclip-thumbnailer/filters/image_magick_filter'
 require 'paperclip-thumbnailer/image_magick_flags'
 
-describe ImageMagickFilter, 'with a mock flag builder' do
+describe Paperclip::Thumbnailer::ImageMagickFilter, 'with a mock flag builder' do
   let(:geometry) { "80x20" }
   let(:options) do
-    { :file_geometry_parser   => MockFileGeometryParser.new('100x200'),
-      :string_geometry_parser => MockStringGeometryParser.new(geometry),
+    { :file_geometry_parser   => Paperclip::Thumbnailer::MockFileGeometryParser.new('100x200'),
+      :string_geometry_parser => Paperclip::Thumbnailer::MockStringGeometryParser.new(geometry),
       :geometry => geometry }
   end
 
-  subject { ImageMagickFilter.new(MockFlags) }
+  subject { Paperclip::Thumbnailer::ImageMagickFilter.new(Paperclip::Thumbnailer::MockFlags) }
 
   it_behaves_like "a combinable ImageMagick filter"
 
@@ -19,14 +19,14 @@ describe ImageMagickFilter, 'with a mock flag builder' do
   end
 end
 
-describe ImageMagickFilter, 'with the default flag builder' do
+describe Paperclip::Thumbnailer::ImageMagickFilter, 'with the default flag builder' do
   let(:expected_command) { %r{^convert #{file.path}\[0\] /tmp} }
   let(:options) { {} }
   let(:file) { File.new(File.join(PROJECT_ROOT, 'Gemfile')) }
-  subject { ImageMagickFilter.new }
+  subject { Paperclip::Thumbnailer::ImageMagickFilter.new }
 
   it "produces the empty ImageMagickFlags instance on as the #flags" do
-    subject.flags({}).should.to_s == ImageMagickFlags.new({}).to_s
+    subject.flags({}).should.to_s == Paperclip::Thumbnailer::ImageMagickFlags.new({}).to_s
   end
 
   it "produces the appropriate #command" do

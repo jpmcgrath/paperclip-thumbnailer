@@ -1,10 +1,15 @@
-class MockFileGeometryParser
-  def initialize(geo)
-    @geometry = geo
-  end
+module Paperclip
+  module Thumbnailer
 
-  def from_file(file)
-    @geometry
+    class MockFileGeometryParser
+      def initialize(geo)
+        @geometry = geo
+      end
+
+      def from_file(file)
+        @geometry
+      end
+    end
+
   end
 end
-

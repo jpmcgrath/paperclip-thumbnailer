@@ -1,34 +1,34 @@
 require 'spec_helper'
 require 'paperclip-thumbnailer/image_magick_flags'
 
-describe ImageMagickFlags, 'source file options' do
+describe Paperclip::Thumbnailer::ImageMagickFlags, 'source file options' do
   it "produces the source file options when those are set" do
     source_file_options = %w(a b c)
-    flags = ImageMagickFlags.new(:source_file_options => source_file_options)
+    flags = Paperclip::Thumbnailer::ImageMagickFlags.new(:source_file_options => source_file_options)
     flags.source_file_options.should == source_file_options
   end
 
   it "produces the empty list when the source file options are unset" do
-    flags = ImageMagickFlags.new({})
+    flags = Paperclip::Thumbnailer::ImageMagickFlags.new({})
     flags.source_file_options.should == []
   end
 end
 
-describe ImageMagickFlags, 'convert options' do
+describe Paperclip::Thumbnailer::ImageMagickFlags, 'convert options' do
   it "produces the convert options when they are set" do
     convert_options = %w(a b d)
-    flags = ImageMagickFlags.new(:convert_options => convert_options)
+    flags = Paperclip::Thumbnailer::ImageMagickFlags.new(:convert_options => convert_options)
     flags.convert_options.should == convert_options
   end
 
   it "produces the empty list when the convert options are unset" do
-    flags = ImageMagickFlags.new({})
+    flags = Paperclip::Thumbnailer::ImageMagickFlags.new({})
     flags.convert_options.should == []
   end
 end
 
-describe ImageMagickFlags, 'builder' do
-  subject { ImageMagickFlags.new({}) }
+describe Paperclip::Thumbnailer::ImageMagickFlags, 'builder' do
+  subject { Paperclip::Thumbnailer::ImageMagickFlags.new({}) }
 
   it "produces itself from #with_flag" do
     subject.with_flag(:a, 'b').should == subject
@@ -44,14 +44,14 @@ describe ImageMagickFlags, 'builder' do
   end
 end
 
-describe ImageMagickFlags do
+describe Paperclip::Thumbnailer::ImageMagickFlags do
   let(:source_file_options) { %w(a b c) }
   let(:convert_options) { %w(d e f) }
   let(:source) { 'k' }
   let(:destination) { 'j' }
 
   subject do
-    ImageMagickFlags.
+    Paperclip::Thumbnailer::ImageMagickFlags.
       new(:source_file_options => source_file_options,
           :convert_options => convert_options).
       with_flag(:g, 'h').
@@ -83,8 +83,8 @@ describe ImageMagickFlags do
   end
 end
 
-describe ImageMagickFlags, 'overriding' do
-  subject { ImageMagickFlags.new({}).with_flag(:a, 'b').with_flag(:a, 'c') }
+describe Paperclip::Thumbnailer::ImageMagickFlags, 'overriding' do
+  subject { Paperclip::Thumbnailer::ImageMagickFlags.new({}).with_flag(:a, 'b').with_flag(:a, 'c') }
 
   it "only takes the very first flag set" do
     subject.flags.should == ['-a', '"b"']
