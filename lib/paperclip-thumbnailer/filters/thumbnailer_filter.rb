@@ -11,8 +11,8 @@ module Paperclip
         @filter
       end
 
-      def command(file, options)
-        filter.command(file, options)
+      def command(source, destination, options)
+        filter.command("#{source}[0]", destination, flags(options))
       end
 
       def flags(options)

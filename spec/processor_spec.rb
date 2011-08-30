@@ -2,14 +2,14 @@ require 'spec_helper'
 require 'paperclip-thumbnailer/processor'
 
 describe Paperclip::Thumbnailer::Processor do
-  let(:file) { 'file' }
+  let(:file) { File.open(File.join(PROJECT_ROOT, 'Gemfile')) }
   let(:filter) do
     Class.new do
       def atop(filter)
         self
       end
 
-      def command(f, o)
+      def command(s,d, o)
         "whoami"
       end
     end.new

@@ -2,8 +2,8 @@ module Paperclip
   module Thumbnailer
 
     class MockFlags
+      attr_accessor :flags, :source, :destination
       def initialize(args)
-        @options = args
         @flags = {}
         @source = nil
         @destination = nil
@@ -38,6 +38,14 @@ module Paperclip
 
       def flag(f)
         @flags[f]
+      end
+
+      def ==(o)
+        o.flags == flags && o.source == source && o.destination == destination
+      end
+
+      def to_s
+        [source, flags.map{|f,v| "-#{f}=#{v}"}, destination].flatten.join(' ')
       end
     end
 

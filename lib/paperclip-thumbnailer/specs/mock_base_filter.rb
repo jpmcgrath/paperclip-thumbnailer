@@ -8,8 +8,8 @@ module Paperclip
         MockFlags.new(options)
       end
 
-      def command(file, options)
-        "echo #{file} #{options.inspect}"
+      def command(source, destination, options)
+        "echo " + options.with_source(source).with_destination(destination).to_s
       end
     end
 

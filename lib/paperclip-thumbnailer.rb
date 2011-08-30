@@ -1,5 +1,1 @@
-module Paperclip
-  module Thumbnailer
-    # Your code goes here...
-  end
-end
+require 'paperclip-thumbnailer/processors/thumbnail'

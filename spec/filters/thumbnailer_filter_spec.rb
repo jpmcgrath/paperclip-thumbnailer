@@ -8,6 +8,8 @@ describe Paperclip::Thumbnailer::ThumbnailerFilter do
       :string_geometry_parser => Paperclip::Thumbnailer::MockStringGeometryParser.new(geometry),
       :geometry => geometry }
   end
+  let(:file) { 'file' }
+  let(:expected_command) { "echo #{file}[0] -resize=#{geometry} #{file}" }
 
   subject do
     Paperclip::Thumbnailer::ThumbnailerFilter.new.tap do |tf|
@@ -16,7 +18,10 @@ describe Paperclip::Thumbnailer::ThumbnailerFilter do
   end
 
   it_behaves_like "a combinable ImageMagick filter"
-  it_behaves_like "an ImageMagick filter with a default command"
+
+  it "sets the source to the first frame in the command" do
+    subject.command(file, file, options).should == expected_command
+  end
 
   it "sets the resize flag correctly" do
     subject.flags(options).should have_flag(:resize).set_to("80x20")

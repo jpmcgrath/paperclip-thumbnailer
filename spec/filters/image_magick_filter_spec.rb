@@ -20,9 +20,9 @@ describe Paperclip::Thumbnailer::ImageMagickFilter, 'with a mock flag builder' d
 end
 
 describe Paperclip::Thumbnailer::ImageMagickFilter, 'with the default flag builder' do
-  let(:expected_command) { %r{^convert #{file.path}\[0\] /tmp} }
+  let(:expected_command) { %{convert file file} }
   let(:options) { {} }
-  let(:file) { File.new(File.join(PROJECT_ROOT, 'Gemfile')) }
+  let(:file) { 'file' }
   subject { Paperclip::Thumbnailer::ImageMagickFilter.new }
 
   it "produces the empty ImageMagickFlags instance on as the #flags" do
@@ -30,6 +30,6 @@ describe Paperclip::Thumbnailer::ImageMagickFilter, 'with the default flag build
   end
 
   it "produces the appropriate #command" do
-    subject.command(file, options).should match(expected_command)
+    subject.command(file, file, options).should == expected_command
   end
 end

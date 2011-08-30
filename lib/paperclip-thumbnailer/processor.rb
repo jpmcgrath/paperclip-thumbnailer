@@ -14,7 +14,27 @@ module Paperclip
       end
 
       def make(file, options = {}, attachment = nil)
-        `#{@filter.command(file, options)}`
+        destination_file = destination(file, options)
+
+        `#{@filter.command(source(file), File.expand_path(destination_file.path), options)}`
+
+        destination_file
+      end
+
+      protected
+
+      def source(file)
+        File.expand_path(file.path)
+      end
+
+      def destination(file, options)
+        format = options[:format]
+        file_ext = File.extname(file.path)
+        basename = File.basename(file.path, file_ext)
+
+        Tempfile.new([basename, format ? ".#{format}" : '']).tap do |tmp|
+          tmp.binmode
+        end
       end
     end
 
