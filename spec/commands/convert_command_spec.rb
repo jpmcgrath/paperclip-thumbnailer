@@ -12,6 +12,10 @@ describe PaperclipThumbnailer::ConvertCommand do
   it "understands #for_command" do
     subject.for_command(:foo).should respond_to(:for_command)
   end
+
+  it "understand the #run! message" do
+    subject.should respond_to(:run!)
+  end
 end
 
 describe PaperclipThumbnailer::ConvertCommand, 'builder' do

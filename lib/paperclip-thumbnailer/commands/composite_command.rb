@@ -41,6 +41,10 @@ module PaperclipThumbnailer
       "composite " + [source_file_options, source, flags, destination_file_options, destination].flatten.join(' ')
     end
 
+    def run!
+      `#{to_s}`
+    end
+
     protected
 
     attr_reader :source, :destination, :flags

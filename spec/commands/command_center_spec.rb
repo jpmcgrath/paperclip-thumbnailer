@@ -32,6 +32,10 @@ describe PaperclipThumbnailer::CommandCenter, 'builder' do
     command1.should have_options(:foo => :bar, :baz => :barney)
     command2.should have_options(:foo => :bar, :baz => :barney)
   end
+
+  it "understand the #run! message" do
+    subject.should respond_to(:run!)
+  end
 end
 
 describe PaperclipThumbnailer::CommandCenter, 'errors' do
