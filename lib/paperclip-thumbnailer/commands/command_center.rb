@@ -53,6 +53,11 @@ module PaperclipThumbnailer
       self
     end
 
+    def with_configuration(c)
+      @command.with_configuration(c)
+      self
+    end
+
     def for_command(command_name)
       @parent.for_command(command_name)
     end

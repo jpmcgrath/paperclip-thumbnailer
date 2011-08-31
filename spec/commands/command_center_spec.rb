@@ -17,11 +17,11 @@ describe PaperclipThumbnailer::CommandCenter, 'builder' do
       with_source(source).
       with_destination(destination).
       for_command(:echo).
+      with_configuration(:baz => :barney).
       with_flag(:a,'b').
       for_command(':'.to_sym).
       with_flag(:c,'d').
-      with_configuration(:foo => :bar).
-      with_configuration(:baz => :barney)
+      with_configuration(:foo => :bar)
   end
 
   it "produces the expected string when built" do
@@ -29,8 +29,8 @@ describe PaperclipThumbnailer::CommandCenter, 'builder' do
   end
 
   it "handles the options" do
-    command1.should have_options(:foo => :bar, :baz => :barney)
-    command2.should have_options(:foo => :bar, :baz => :barney)
+    command1.should have_configuration(:baz => :barney)
+    command2.should have_configuration(:foo => :bar)
   end
 
   it "understand the #run! message" do

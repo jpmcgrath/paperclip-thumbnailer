@@ -13,6 +13,6 @@ describe PaperclipThumbnailer::FilterTerminus do
   it "sets the source, destination, and options for the given command" do
     subject.should have_source(source)
     subject.should have_destination(destination)
-    subject.should have_options(options)
+    subject.should have_configuration(options)
   end
 end

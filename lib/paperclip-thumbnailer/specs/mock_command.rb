@@ -42,7 +42,7 @@ module PaperclipThumbnailer
       @destination == destination
     end
 
-    def has_options?(options)
+    def has_configuration?(options)
       @options == options
     end
   end
