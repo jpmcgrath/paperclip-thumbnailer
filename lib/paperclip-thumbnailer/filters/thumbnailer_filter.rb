@@ -7,16 +7,12 @@ module Paperclip
         self
       end
 
-      def filter
-        @filter
-      end
-
       def command(source, destination, options)
-        filter.command("#{source}[0]", destination, flags(options))
-      end
+        new_source = "#{source}[0]"
 
-      def flags(options)
-        filter.flags(options).with_flag(:resize, options[:geometry])
+        @filter.command(new_source, destination, options).tap do |cmd|
+          cmd.for_command(:convert).with_flag(:resize, options[:geometry])
+        end
       end
     end
 

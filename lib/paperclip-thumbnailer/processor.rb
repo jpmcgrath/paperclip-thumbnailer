@@ -15,8 +15,9 @@ module Paperclip
 
       def make(file, options = {}, attachment = nil)
         destination_file = destination(file, options)
+        cmd = @filter.command(source(file), File.expand_path(destination_file.path), options)
 
-        `#{@filter.command(source(file), File.expand_path(destination_file.path), options)}`
+        `#{cmd.to_s}`
 
         destination_file
       end
