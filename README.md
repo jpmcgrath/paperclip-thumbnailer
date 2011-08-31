@@ -3,7 +3,7 @@ paperclip-thumbnailer
 
 A gem in four parts.
 
-This gem provides a Paperclip processor named `:basic_thumbnailer`. You can use it like this:
+This gem provides a [Paperclip](https://github.com/thoughtbot/paperclip) processor named `:basic_thumbnailer`. You can use it like this:
 
     gem 'paperclip-thumbnailer'
   
@@ -13,7 +13,7 @@ This gem provides a Paperclip processor named `:basic_thumbnailer`. You can use 
 
 It thumbnails things in the most boring way possible.
 
-This gem is mainly for building other Paperclip processors.
+This gem is mainly for building other Paperclip processors. An example is the [paperclip-watermarker](https://github.com/thoughtbot/paperclip-watermarker) processor.
 
 Building Blocks
 ---------------
@@ -58,9 +58,11 @@ Let's take the complex example above:
 This will build a new PaperclipThumbnailer::Processor like this:
 
     base_command = CommandCenter.new([ConvertCommand.new, CompositeCommand.new])
+
     thumbnailer_filter = ThumbnailerFilter.new
     watermarker_filter = WatermarkerFilter.new
     terminus = FilterTerminus.new(base_command)
+
     Processor.new(thumbnailer_filter.atop(watermarker_filter.atop(terminus)))
 
 This new processor is ready to use as a Paperclip processor.
