@@ -1,66 +1,82 @@
 require 'spec_helper'
 require 'paperclip-thumbnailer/processor'
 
-describe Paperclip::Thumbnailer::Processor do
+describe PaperclipThumbnailer::Processor do
   let(:file) { File.open(File.join(PROJECT_ROOT, 'Gemfile')) }
-  let(:filter) do
-    Class.new do
-      def atop(filter)
-        self
-      end
+  let(:options) { {:a => 1} }
+  let(:attachment) { 'attachment' }
+  let(:filter) { PaperclipThumbnailer::MockFilter.new }
 
-      def command(s,d, o)
-        "whoami"
-      end
-    end.new
-  end
-  subject { Paperclip::Thumbnailer::Processor.new(filter) }
+  subject { PaperclipThumbnailer::Processor.new(filter) }
 
   it_behaves_like "a Paperclip processor"
 
   it "runs the filter's command" do
-    lambda { subject.make(file) }.should_not raise_error
+    destination_file = subject.make(file, options, attachment)
+
+    destination_file.should respond_to(:close)
+    destination_file.should respond_to(:path)
+    filter.should have_run_command(File.expand_path(file.path),
+                                   File.expand_path(destination_file.path),
+                                   options)
   end
 end
 
-describe Paperclip::Thumbnailer::Processor, "building" do
+describe PaperclipThumbnailer::Processor, "building" do
   let(:top_filter) do
     Class.new do
       def atop(f)
         @filter = f
         self
       end
-      def filter
-        @filter
+      def command(source, destination, options)
+        @subfilter_command = @filter.command(source, destination, options)
+        @source = source
+        @destination = destination
+        @options = options
+        self
       end
-      def flags(options)
-        filter.flags(options)
+      def run!
+        @has_run = true
       end
-      def command(file, options)
-        filter.command(file, options)
+      def has_run_command?(source, destination, options)
+        @has_run &&
+          @subfilter_command &&
+          @subfilter_command.has_run_command?(source, destination, options) &&
+          source == @source &&
+          destination == @destination &&
+          options == @options
       end
     end.new
   end
   let(:bottom_filter) do
     Class.new do
+      attr_reader :source, :destination, :options
       def atop(f)
         @filter = f
         self
       end
-      def filter
-        @filter
+      def command(source, destination, options)
+        @source = source
+        @destination = destination
+        @options = options
+        self
       end
-      def flags(options)
-        []
-      end
-      def command(file, options)
-        ""
+      def has_run_command?(source, destination, options)
+        source == @source && destination == @destination && options == @options
       end
     end.new
   end
+  let(:file) { File.open(File.join(PROJECT_ROOT, 'Gemfile')) }
+  let(:options) { {:a => 1} }
+  let(:attachment) { 'attachment' }
+
+  subject { PaperclipThumbnailer::Processor.build_from([top_filter, bottom_filter]) }
 
   it "can be build from composing filters" do
-    processor = Paperclip::Thumbnailer::Processor.build_from([top_filter, bottom_filter])
-    processor.should respond_to(:make)
+    destination_file = subject.make(file, options, attachment)
+    top_filter.should have_run_command(File.expand_path(file.path),
+                                       File.expand_path(destination_file.path),
+                                       options)
   end
 end
