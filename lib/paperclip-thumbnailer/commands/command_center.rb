@@ -24,8 +24,8 @@ module PaperclipThumbnailer
       self
     end
 
-    def with_options(options)
-      @commands.each {|command| command.with_options(options)}
+    def with_configuration(options)
+      @commands.each {|command| command.with_configuration(options)}
       self
     end
 

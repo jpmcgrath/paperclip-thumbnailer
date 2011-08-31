@@ -41,7 +41,7 @@ module PaperclipThumbnailer
       self
     end
 
-    def with_options(options)
+    def with_configuration(options)
       @options = @options.merge(options)
       self
     end
@@ -64,7 +64,7 @@ module PaperclipThumbnailer
       end
     end
 
-    def has_option?(option, value)
+    def has_configuration?(option, value)
       @options.has_key?(option) && @options[option] == value
     end
   end

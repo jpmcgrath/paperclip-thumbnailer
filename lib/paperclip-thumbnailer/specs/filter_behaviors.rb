@@ -15,7 +15,7 @@ shared_examples "a combinable filter" do
       def with_flag(f,v=nil)
         self
       end
-      def with_options(o)
+      def with_configuration(o)
         self
       end
       def invoked?

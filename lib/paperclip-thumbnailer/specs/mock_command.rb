@@ -20,7 +20,7 @@ module PaperclipThumbnailer
       self
     end
 
-    def with_options(options)
+    def with_configuration(options)
       @options = @options.merge(options)
       self
     end

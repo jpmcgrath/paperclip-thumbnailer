@@ -9,7 +9,7 @@ module PaperclipThumbnailer
       @command.
         with_source(source).
         with_destination(destination).
-        with_options(options)
+        with_configuration(options)
     end
   end
 

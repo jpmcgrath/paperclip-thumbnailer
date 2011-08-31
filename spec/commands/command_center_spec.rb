@@ -20,8 +20,8 @@ describe PaperclipThumbnailer::CommandCenter, 'builder' do
       with_flag(:a,'b').
       for_command(':'.to_sym).
       with_flag(:c,'d').
-      with_options(:foo => :bar).
-      with_options(:baz => :barney)
+      with_configuration(:foo => :bar).
+      with_configuration(:baz => :barney)
   end
 
   it "produces the expected string when built" do

@@ -28,8 +28,8 @@ describe PaperclipThumbnailer::ConvertCommand, 'builder' do
 
   before do
     subject.
-      with_options(:source_file_options => %w(a b c)).
-      with_options(:destination_file_options => %w(d e f)).
+      with_configuration(:source_file_options => %w(a b c)).
+      with_configuration(:destination_file_options => %w(d e f)).
       with_source(source).
       with_destination(destination).
       with_flag(:a, 'b').
