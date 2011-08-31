@@ -1,13 +1,17 @@
-module Paperclip
-  module Thumbnailer
+module PaperclipThumbnailer
 
-    class CommandCenter
-      def initialize(commands)
-        @commands = commands
-      end
+  class CommandCenter
+    def initialize(commands)
+      @commands = commands
+    end
 
       def for_command(tag)
-        @commands.detect {|command| command.tag == tag}
+        subcommand = @commands.detect {|command| command.tag == tag}
+        if subcommand
+          ForCommand.new(self, subcommand)
+        else
+          raise IndexError, "no command with tag #{tag} in the CommandCenter"
+        end
       end
 
       def with_source(source)
@@ -31,7 +35,26 @@ module Paperclip
 
         @commands.map{|command| command.to_s}.join(' | ')
       end
+  end
+
+
+  class ForCommand
+    def initialize(parent, command)
+      @parent = parent
+      @command = command
     end
 
+    def with_flag(f,v=nil)
+      @command.with_flag(f,v)
+      self
+    end
+
+    def for_command(command_name)
+      @parent.for_command(command_name)
+    end
+
+    def method_missing(method_name, *args, &block)
+      @parent.send(method_name,*args,&block)
+    end
   end
 end

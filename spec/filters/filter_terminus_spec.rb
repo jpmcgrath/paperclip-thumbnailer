@@ -2,7 +2,7 @@ require 'spec_helper'
 require 'paperclip-thumbnailer/filters/filter_terminus'
 
 describe PaperclipThumbnailer::FilterTerminus do
-  let(:command) { PaperclipThumbnailer::MockCommand.new }
+  let(:command) { PaperclipThumbnailer::MockCommand.new('echo') }
   let(:filter) { PaperclipThumbnailer::FilterTerminus.new(command) }
   let(:source) { 'source' }
   let(:destination) { 'destination' }
