@@ -15,15 +15,22 @@ shared_examples "a combinable filter" do
       def with_flag(f,v=nil)
         self
       end
+      def with_options(o)
+        self
+      end
       def invoked?
         @was_invoked
       end
     end.new
     source = 'file'
     destination = 'file'
-    options = {:a => 1}
+    os = if defined?(options)
+           options
+         else
+           {:a =>1}
+         end
 
-    subject.atop(base_filter).command(source, destination, options)
+    subject.atop(base_filter).command(source, destination, os)
 
     base_filter.should be_invoked
   end

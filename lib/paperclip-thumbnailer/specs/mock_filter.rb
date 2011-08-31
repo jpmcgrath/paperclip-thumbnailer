@@ -9,6 +9,7 @@ module PaperclipThumbnailer
       @has_run = false
       @for_commands = []
       @flags = {}
+      @options = {}
     end
 
     def command(source, destination, options)
@@ -40,6 +41,11 @@ module PaperclipThumbnailer
       self
     end
 
+    def with_options(options)
+      @options = @options.merge(options)
+      self
+    end
+
     def flag(command, flag)
       if command
         commands = @for_commands.detect{|e,f| e==command}
@@ -49,13 +55,17 @@ module PaperclipThumbnailer
       end
     end
 
-    def has_flag?(command,flag)
+    def has_flag?(command, flag)
       if command
-        commands = @for_commands.detect{|e,f| e==command}
+        commands = @for_commands.detect{|(e,f)| e==command}
         commands[1][flag] if commands
       else
         @flags[flag]
       end
+    end
+
+    def has_option?(option, value)
+      @options.has_key?(option) && @options[option] == value
     end
   end
 end
